@@ -48,7 +48,7 @@ def adicionarProcesso(Processos):
     
 
     for i,e in enumerate(Processos):
-        #Clicar n botão "Novo"
+        #Clicar no botão "Novo"
         
         pg.click(botaoNovo)
         #Digitar nome do processo...
