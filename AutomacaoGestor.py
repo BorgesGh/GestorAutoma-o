@@ -40,6 +40,12 @@ def leituraDeTempos(sheet):
         
     return Tempos
 
+def limparConteudo():
+    pg.keyDown('ctrl')
+    pg.press('a')
+    pg.press('delete')
+    pg.keyUp('ctrl')
+    time.sleep(1)
 
 def adicionarProcesso(Processos):
 
@@ -62,19 +68,19 @@ def adicionarTempoProcesso(Processos, Tempos):
 
 
     #botao de selecionar o processo
-    botaoProcesso = pg.position(x=744, y=260)
+    botaoProcesso = pg.position(x=752, y=291)
 
     #Barra de pesquisa
-    barraPesquisa = pg.position(x=759, y=305)
+    barraPesquisa = pg.position(x=771, y=337)
 
     #Primeira opção dos processos
-    primeiraOp = pg.position(x=755, y=366)
+    primeiraOp = pg.position(x=782, y=396)
 
     #Area de tempo padrao
-    areaTempo = pg.position(x=1704, y=309)
+    areaTempo = pg.position(x=1715, y=343)
 
     #Botão salvar
-    salvar = pg.position(x=1148, y=934)
+    salvar = pg.position(x=1145, y=954)
     #Pressionando tab e seguida, é possivel cofirmar o tempo padrão
     
     for i,e in enumerate(Processos):
@@ -101,10 +107,7 @@ def adicionarTempoProcesso(Processos, Tempos):
 
         #Apagar o processo que havia escrito
         pg.click(barraPesquisa)
-        pg.keyDown('ctrl')
-        pg.press('a')
-        pg.press('delete')
-        pg.keyUp('ctrl')
+        limparConteudo()
 
         pg.click(botaoProcesso)
 
@@ -116,7 +119,56 @@ def manipularSheet(Processos):
 
     planilhaProcessos.save('Teste.xlsx')
 
-#main =====
+
+def adicionarFeriados():
+
+    #Menu retraido, 90% de zoom
+
+    #Novo botao
+    novo = pg.position(x=146, y=247)
+
+    #Descricao
+    descricao = pg.position(x=926, y=334)
+
+    #Data (13/02)
+    dataAba = pg.position(x=927, y=519)
+    dataDia = pg.position(x=881, y=725)
+
+    #Horario de inicio
+    horaInicial = pg.position(x=813, y=616)
+
+    #Duração
+    duracao = pg.position(x=989, y=610)
+
+    #Falta botão
+    faltaBotao = pg.position(x=1302, y=614)
+
+    pg.click(novo)
+    time.sleep(2)
+    pg.click(descricao)
+    pg.write("Carnaval")
+
+    pg.click(dataAba)
+    pg.click(dataDia)
+    
+    time.sleep(2)
+    pg.click(horaInicial)
+    limparConteudo()
+    pg.write("07:00")
+
+    pg.click(duracao)
+    time.sleep(1)
+    pg.write("34:30")
+
+    pg.click(faltaBotao)
+
+    #Tempo para selecionar e salvar
+    time.sleep(10)
+
+    return 0
+
+
+#main ======
 Processos = leituraDeProcessos(sheet)
 Tempos = leituraDeTempos(sheet)
 
@@ -124,4 +176,7 @@ Tempos = leituraDeTempos(sheet)
 
 #adicionarProcesso(Processos)
 #adicionarTempoProcesso(Processos,Tempos)
+
+for i in range(40):
+    adicionarFeriados()
 
