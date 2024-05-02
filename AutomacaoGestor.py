@@ -1,7 +1,7 @@
 import pyautogui as pg
 import time
 import openpyxl
-
+import os
 
 #Acessar área de inserção dos tempos
 
@@ -13,18 +13,19 @@ time.sleep(5)#Tempo para acessar outra tela, no caso o navegador
 # Trocar  /    01:30 
 # ....        ......
 
-planilhaProcessos = openpyxl.load_workbook('Teste.xlsx')
+# Obter o diretório atual do arquivo Python
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+
+# Construir o caminho completo para a planilha
+caminho_planilha = os.path.join(diretorio_atual, "Teste.xlsx")
+
+# Carregar a planilha usando o caminho correto
+planilhaProcessos = openpyxl.load_workbook(caminho_planilha)
+
 sheet = planilhaProcessos['Sheet1']
 
 OrdemDeServico = [] #Nome da OS e tempo
-def limparConteudo():
-    pg.keyDown('ctrl')
-    pg.press('a')
-    pg.press('delete')
-    pg.keyUp('ctrl')
-    time.sleep(1)
-
-
+# =============================================================== ///////////////// =================================
 def leituraDeProcessos(sheet):
     Processos = []
 
@@ -35,35 +36,32 @@ def leituraDeProcessos(sheet):
         Processos.append(celula.value)
         
     return Processos
-
+# =============================================================== ///////////////// =================================
 def leituraDeTempos(sheet):
     
     Tempos = []
 
     linhas = sheet.max_row
-    # print(linhas)
 
     for i in range(1,linhas + 1):
         celula = sheet.cell(row = i,column = 2)
-        celula = celula.value[1:] #Tirar o ' da frente do tempo
-        # print(str(celula))
-        Tempos.append(celula + ":00") #
-        # print(Tempos)
-        
+        Tempos.append(celula.value + ":00")
         
     return Tempos
-
-
-
+# =============================================================== ///////////////// =================================
+def limparConteudo():
+    pg.keyDown('ctrl')
+    pg.press('a')
+    pg.press('delete')
+    pg.keyUp('ctrl')
+    time.sleep(1)
+# =============================================================== ///////////////// =================================
 def adicionarProcesso(Processos):
 
-    #Menu aberto, 90% de zoom e barra exposta
-
-    Processos = Processos[374:] # Pegar apartir do ultimo que parei
-
     #Botao "novo"
-    botaoNovo = pg.position(x=399, y=303)
+    botaoNovo = pg.position(x=411, y=224)
     
+
     for i,e in enumerate(Processos):
         #Clicar no botão "Novo"
         
@@ -74,25 +72,24 @@ def adicionarProcesso(Processos):
         pg.press('enter')
         #Agurdar alguns segundos de save...
         time.sleep(3)
-        
+# =============================================================== ///////////////// =================================      
 def adicionarTempoProcesso(Processos, Tempos):
 
-    #Menu fechado e 90% de zoom, Barra de tarefas expostas
 
     #botao de selecionar o processo
-    botaoProcesso = pg.position(x=758, y=365)
+    botaoProcesso = pg.position(x=752, y=291)
 
     #Barra de pesquisa
-    barraPesquisa = pg.position(x=748, y=323)
+    barraPesquisa = pg.position(x=771, y=337)
 
     #Primeira opção dos processos
-    primeiraOp = pg.position(x=785, y=484)
+    primeiraOp = pg.position(x=782, y=396)
 
     #Area de tempo padrao
-    areaTempo = pg.position(x=1512, y=351)
+    areaTempo = pg.position(x=1715, y=343)
 
     #Botão salvar
-    salvar = pg.position(x=1010, y=865)
+    salvar = pg.position(x=1145, y=954)
     #Pressionando tab e seguida, é possivel cofirmar o tempo padrão
     
     for i,e in enumerate(Processos):
@@ -111,7 +108,7 @@ def adicionarTempoProcesso(Processos, Tempos):
 
         time.sleep(0.5)
         pg.click(salvar)
-        time.sleep(6)
+        time.sleep(3)
 
         #Desmarcar o processo
         pg.click(botaoProcesso)
@@ -122,7 +119,7 @@ def adicionarTempoProcesso(Processos, Tempos):
         limparConteudo()
 
         pg.click(botaoProcesso)
-
+# =============================================================== ///////////////// =================================
 def manipularSheet(Processos):
     
     for i,e in enumerate(Processos):
@@ -131,8 +128,8 @@ def manipularSheet(Processos):
 
     planilhaProcessos.save('Teste.xlsx')
 
-
-def adicionarFeriados(indiceDoDia):
+# =============================================================== ///////////////// =================================
+def adicionarFeriados():
 
     #Menu retraido, 90% de zoom
 
@@ -141,14 +138,12 @@ def adicionarFeriados(indiceDoDia):
 
     #Descricao
     descricao = pg.position(x=926, y=334)
-   #Data (13/02)
+
+    #Data (13/02)
     dataAba = pg.position(x=927, y=519)
+    dataDia = pg.position(x=881, y=725)
 
-    datas = []
-    datas.append(pg.position(x=749, y=744)) #Dia 12
-    datas.append(pg.position(x=873, y=735)) #Dia 13
-
-    #Horario 10:15de inicio
+    #Horario de inicio
     horaInicial = pg.position(x=813, y=616)
 
     #Duração
@@ -163,16 +158,16 @@ def adicionarFeriados(indiceDoDia):
     pg.write("Carnaval")
 
     pg.click(dataAba)
-    pg.click(datas[indiceDoDia])
+    pg.click(dataDia)
     
     time.sleep(2)
     pg.click(horaInicial)
     limparConteudo()
-    pg.write("07:15")
+    pg.write("07:00")
 
     pg.click(duracao)
     time.sleep(1)
-    pg.write("10:15") # 1 dia de trabalho
+    pg.write("34:30")
 
     pg.click(faltaBotao)
 
@@ -181,27 +176,46 @@ def adicionarFeriados(indiceDoDia):
 
     return 0
 
-def clickar(quantidade):
-    
-    for i in range(quantidade):
-        pg.click()
-        time.sleep(0.5)
-        pg.press('enter')
-        time.sleep(2)
+# =============================================================== ///////////////// =================================
+def criarFormulario(Processos,questionario):
+    #90% de zoom
+    #Menu fechado
+
+    #Novo
+    buttonNovo = pg.position(x=68, y=263)
+
+    #Aba de processos   
+    processo = pg.position(x=273, y=325)
+
+    #barra de pesquisa
+    barraDePesquisa = pg.position(x=255, y=381)
+
+    #primeira opção
+    primeiraOpcao = pg.position(x=228, y=456)
+
+    #Aba de tipo
+    abaTipo = pg.position(x=1524, y=324)
+
+    #Aba de descrição
+    descricao = pg.position(x=319, y=429)
+
+    #aba True ou false
+    trueFalse = pg.position(x=675, y=444)
 
 
-#main ====== Carnaval
-Processos = leituraDeProcessos(sheet) 
+    #for i in Processos:
+
+
+
+# =============================================================== //// -- MAIN --///// =================================
+Processos = leituraDeProcessos(sheet)
 Tempos = leituraDeTempos(sheet)
 
 #Descomentar apenas o que será feito
+
 #adicionarProcesso(Processos)
+#adicionarTempoProcesso(Processos,Tempos)
 
-adicionarTempoProcesso(Processos,Tempos)
-
-# for i in Tempos:
-#     print(i)
-# for p in Processos:
-#     print(p)
+questionario = [["Tipo","Descrição",True],["Tipo2","Descrição2",False]]
 
 print(pg.position())
