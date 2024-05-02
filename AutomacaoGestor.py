@@ -177,33 +177,82 @@ def adicionarFeriados():
     return 0
 
 # =============================================================== ///////////////// =================================
-def criarFormulario(Processos,questionario):
+def criarChecklist(Processos,Dados):
     #90% de zoom
     #Menu fechado
 
     #Novo
     buttonNovo = pg.position(x=68, y=263)
 
-    #Aba de processos   
-    processo = pg.position(x=273, y=325)
-
     #barra de pesquisa
-    barraDePesquisa = pg.position(x=255, y=381)
+    pesqProcesso = pg.position(x=255, y=381)
 
     #primeira opção
     primeiraOpcao = pg.position(x=228, y=456)
+    
+    #barra pesquisa tipo
+    pesqTipo = pg.position(x=874, y=382)
+    tipoInput = "Alternador" #Insira o tipo aqui...
+    
+    #Primeira opção do tipo
+    pirmeiraOpcaoTipo = pg.position(x=876, y=460)
 
-    #Aba de tipo
-    abaTipo = pg.position(x=1524, y=324)
+    #Percorrer pelos processos
+    for i_processos,e_processos in enumerate(Processos):
 
-    #Aba de descrição
-    descricao = pg.position(x=319, y=429)
+        for i_dados,e_dados in enumerate(Dados):
 
-    #aba True ou false
-    trueFalse = pg.position(x=675, y=444)
+            #Coleta de dados do checklist
+            tipo = Dados[i_dados][0]
+
+            descricao = Dados[i_dados][1]
+
+            resposta = Dados[i_dados][2]
+
+            #Criar novo checklist
+            pg.click(buttonNovo)
+            time.sleep(3)
+
+            #Pesquisar processo
+            pg.press('TAB')
+            pg.press('SPACE')
+            time.sleep(1)
+            pg.write(e_processos)
+            pg.click(primeiraOpcao)
+            time.sleep(1)
+
+            #Pesquisar Tipo do processo
+            pg.press('TAB')
+            pg.press('SPACE')
+            time.sleep(1)
+            pg.write(tipoInput)
+            time.sleep(1)
+            pg.click(pirmeiraOpcaoTipo)
+            time.sleep(1)
+
+            #Inserir Tipo
+            pg.press('TAB')
+            pg.write(tipo)
+            time.sleep(1)
+
+            #Inserir Descrição
+            pg.press('TAB')
+            pg.write(descricao)
+            time.sleep(1)
+            
+            if(resposta != True):
+                pg.press('TAB')
+                pg.press('SPACE')
+            else:
+                pg.press('TAB')
+
+            #salvar o conteudo
+            pg.press('TAB')
+            pg.press('SPACE')
+            time.sleep(3)
 
 
-    #for i in Processos:
+
 
 
 
@@ -216,6 +265,15 @@ Tempos = leituraDeTempos(sheet)
 #adicionarProcesso(Processos)
 #adicionarTempoProcesso(Processos,Tempos)
 
-questionario = [["Tipo","Descrição",True],["Tipo2","Descrição2",False]]
+Dados = [
+        
+        ["Tipo","Descri",False],
+        ["Suica","Almondega",True],
+        ["Cafeinado","Loucura",False]
+         
+        ]
 
+Processos = ["Alternador","Airbag","Ala do Teto"]
+
+criarChecklist(Processos,Dados)
 print(pg.position())
