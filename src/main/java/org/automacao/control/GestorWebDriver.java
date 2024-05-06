@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -35,6 +37,7 @@ public class GestorWebDriver{
     public WebElement encontrarElemento(String indetificador){
         int tentativas = 0;
         WebElement elemento = null;
+
         try{
             elemento = driver.findElement(By.xpath(indetificador));
         }catch (Exception ignored){
@@ -72,8 +75,55 @@ public class GestorWebDriver{
         return elemento;
     }
 
+    public WebElement encontrarElementoWait(String indetificador,int segundos){
+        int tentativas = 0;
+        WebElement elemento = null;
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(segundos));
+
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(indetificador)));
+        }catch (Exception ignored){
+            tentativas++;
+        }
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.id(indetificador)));
+        }catch (Exception  ignored){
+            tentativas++;
+        }
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.linkText(indetificador)));
+        }catch (Exception  ignored){
+            tentativas++;
+        }
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(indetificador)));
+        }catch (Exception  ignored){
+            tentativas++;
+        }
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.className(indetificador)));
+        }catch (Exception  ignored){
+            tentativas++;
+        }
+        try{
+            elemento = wait.until(ExpectedConditions.elementToBeClickable(By.tagName(indetificador)));
+        }catch (Exception  ignored){
+            tentativas++;
+        }
+
+        if(tentativas == 6){
+            throw new NoSuchElementException("Botão não encontrado na página!");
+        }
+        return elemento;
+    }
+
     public void esperarEmSegundos(int segundos){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(segundos));
+    }
+
+    public WebDriver getInstanceDriver(){
+        return driver;
     }
 
 }

@@ -14,9 +14,11 @@ import java.util.List;
 import static org.apache.commons.collections4.IteratorUtils.toList;
 
 public class GerenciadorDePlanilha {
-    Sheet planilha;
 
-    public GerenciadorDePlanilha() {
+    private static Sheet planilha;
+    private static final GerenciadorDePlanilha myInstance = new GerenciadorDePlanilha();
+
+    private GerenciadorDePlanilha() {
         try {
             FileInputStream file = new FileInputStream("src/main/resources/BancoDeDados.xlsx");
             XSSFWorkbook workbook = (XSSFWorkbook) WorkbookFactory.create(file);
@@ -25,6 +27,10 @@ public class GerenciadorDePlanilha {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public static GerenciadorDePlanilha getInstance() {
+        return myInstance;
     }
 
     public List<Row> getLinhas(){
