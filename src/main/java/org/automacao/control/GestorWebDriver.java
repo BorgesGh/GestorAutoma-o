@@ -29,9 +29,7 @@ public class GestorWebDriver{
             System.out.println("Nao foi possivel abrir a url!");
         }
 
-        driver.switchTo().frame(0);
-
-        System.out.println(driver.getTitle());
+        atualizarFrame();
     }
 
     public WebElement encontrarElemento(String indetificador){
@@ -120,6 +118,13 @@ public class GestorWebDriver{
 
     public void esperarEmSegundos(int segundos){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(segundos));
+    }
+    public void esperarMeioSegundo(){
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+    }
+
+    public void atualizarFrame(){
+        driver.switchTo().frame(0);
     }
 
     public WebDriver getInstanceDriver(){
