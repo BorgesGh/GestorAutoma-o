@@ -47,11 +47,12 @@ public class InserirChecklist implements Tarefa {
                 System.out.println("Passou da qui");
 
                 //Encontrar Processo
-                inserirStringBoxList(driver,"/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[1]/gs-input/span[1]/p-dropdown/div/span",
+                inserirStringBoxList(driver,"/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[1]/gs-input/span[1]/p-dropdown/div",
                                         processo);
 
                 //Clicar na primeira opção
-                WebElement primeiroProcessoBox = driver.encontrarElementoWait("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[1]/gs-input/span[1]/p-dropdown/div/div[3]/div[2]/ul/p-dropdownitem[1]/li",1);
+                driver.esperarMeioSegundo();
+                WebElement primeiroProcessoBox = driver.encontrarElemento("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[1]/gs-input/span[1]/p-dropdown/div/div[3]/div[2]/ul/p-dropdownitem[1]/li");
                 primeiroProcessoBox.click();
 
                 //Encontrar Tipo
@@ -59,7 +60,8 @@ public class InserirChecklist implements Tarefa {
                                         tipo);
 
                 //Clicar na primeira opção
-                WebElement primeiroTipoBox = driver.encontrarElementoWait("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[2]/gs-input/span[1]/p-dropdown/div/div[3]/div[2]/ul/p-dropdownitem[1]/li",1);
+                driver.esperarMeioSegundo();
+                WebElement primeiroTipoBox = driver.encontrarElemento("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[2]/gs-input/span[1]/p-dropdown/div/div[3]/div[2]/ul/p-dropdownitem[1]/li");
                 primeiroTipoBox.click();
 
                 //Escrever tipo
@@ -101,7 +103,8 @@ public class InserirChecklist implements Tarefa {
     }
 
     public void inserirStringBoxList(GestorWebDriver driver, String indetificador, String string){
-        WebElement boxProcesso = driver.encontrarElementoWait(indetificador,1);
+        driver.esperarMeioSegundo();
+        WebElement boxProcesso = driver.encontrarElemento(indetificador);
         boxProcesso.click();
         teclado.digitarTexto(string);
     }
