@@ -10,8 +10,10 @@ public class Main {
     public static void main(String[] args) {
         System.setProperty("webdriver.http.factory", "jdk-http-client");
 
+
+
+        System.out.println(GerenciadorDePlanilha.getInstance().getProcessos());
         GestorWebDriver driver = new GestorWebDriver();
-//        driver.esperarEmSegundos(5);
 
         Tarefa login = new Login();
         login.executar(driver);
@@ -19,10 +21,7 @@ public class Main {
         Tarefa inserirCheckList = new InserirChecklist();
         inserirCheckList.executar(driver);
 
-
-        System.out.println(GerenciadorDePlanilha.getInstance().getProcessos());
-
-
+        System.out.println("Programa Finalizado!!");
 
     }
 }

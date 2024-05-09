@@ -9,7 +9,7 @@ public class Login implements Tarefa {
     @Override
     public void executar(GestorWebDriver driver) {
         WebElement email = driver.encontrarElemento("/html/body/app-root/app-login/div/div[1]/form/div[2]/input");
-        email.sendKeys("teste");
+        email.sendKeys("sos");
 
         WebElement senha = driver.encontrarElemento("/html/body/app-root/app-login/div/div[1]/form/div[4]/p-password/div/input");
         senha.sendKeys("123");

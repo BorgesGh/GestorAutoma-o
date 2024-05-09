@@ -36,7 +36,7 @@ public class InserirChecklist implements Tarefa {
 
     private void inserirDados(GestorWebDriver driver){
         //Esse tipo provavelmente será retirado, mas os tipos não variam de acordo com o processo
-        String tipo = "Alternador";
+        String tipo = "Instalação";
 
         for(String processo : processos) {
             for(Formulario formulario : questionario) {
@@ -44,7 +44,6 @@ public class InserirChecklist implements Tarefa {
 
                 WebElement botaoNovo = driver.encontrarElemento("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-usuario-table/gs-table/div/p-toolbar/div/div/div/button[1]");
                 botaoNovo.click(); //                                       /html/body/app-root/app-admin/app-gs-viewport/div/div/gs-usuario-table/gs-table/div/p-toolbar/div/div/div/button[1]
-                System.out.println("Passou da qui");
 
                 //Encontrar Processo
                 inserirStringBoxList(driver,"/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-verificacao-form/div/gs-form/form/div[1]/gs-input/span[1]/p-dropdown/div",
@@ -84,21 +83,15 @@ public class InserirChecklist implements Tarefa {
                 teclado.teclar(Keys.TAB);
                 teclado.teclar(Keys.SPACE);
                 driver.esperarEmSegundos(1);
+
+
             }
+            System.out.println("O Ultimo processo feito: " + processo);
         }
     }
     private void carregarFormularios(){
-        questionario.add(new Formulario("Foram recolhidos os materiais obrigatórios?",
-                "Acessórios (bucha, parafuso, luva); Cabo CA; Caixa de passagem; Conectores; Discos; Disjuntor; DPS; Fitas isolantes; Grampo de Aterramento; Haste Terra; Quadro de Distribuição; Tubulação",
-                false));
-        questionario.add(new Formulario("Foram recolhidos os materiais específicos para solo ou estrutura?",
-                "Areia, brita e cimento; Eletrodo; Perfil; Tábua de Madeira; Tinta",
-                true));
-        questionario.add(new Formulario("Foram recolhidas as ferramentas obrigatórias?",
-                "Câmera termográfica; Chave de fenda; Chave Philips; Alicate; Chave de Boca; Drone; Esmerilhadeira; Furadeira; Marreta; Multímetro; Parafusadeira; Terrômetro",
-                true));
-        questionario.add(new Formulario("Foram recolhidas as ferramentas para solo ou estrutura?",
-                "Máquina de Solda; Máscara de Solda; Perfurador de Solo?",
+        questionario.add(new Formulario("Foram realizadas todas as etapas de fixação dos equipamentos?",
+                "Alojamento do inversor (somente no caso de construção do local do inversor); Fixação dos módulos fotovoltaicos; Fixação dos microinversores ou inversor tradicional; Colocação das plaquinhas",
                 true));
     }
 
