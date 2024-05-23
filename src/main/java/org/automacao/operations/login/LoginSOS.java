@@ -1,10 +1,10 @@
-package org.automacao.operations;
+package org.automacao.operations.login;
 
 import org.automacao.control.GestorWebDriver;
 import org.automacao.interfaces.Tarefa;
 import org.openqa.selenium.WebElement;
 
-public class Login implements Tarefa {
+public class LoginSOS implements Tarefa {
 
     @Override
     public void executar(GestorWebDriver driver) {

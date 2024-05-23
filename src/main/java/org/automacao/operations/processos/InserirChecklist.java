@@ -1,4 +1,4 @@
-package org.automacao.operations;
+package org.automacao.operations.processos;
 
 import org.automacao.control.GerenciadorDePlanilha;
 import org.automacao.control.GestorWebDriver;
@@ -90,8 +90,8 @@ public class InserirChecklist implements Tarefa {
         }
     }
     private void carregarFormularios(){
-        questionario.add(new Formulario("Foram realizadas todas as etapas de fixação dos equipamentos?",
-                "Alojamento do inversor (somente no caso de construção do local do inversor); Fixação dos módulos fotovoltaicos; Fixação dos microinversores ou inversor tradicional; Colocação das plaquinhas",
+        questionario.add(new Formulario("Foram realizadas todas as etapas da parte elétrica?",
+                "Fixação do Quadro CA; Aterramento da usina; Instalação do cabo CA/CC",
                 true));
     }
 

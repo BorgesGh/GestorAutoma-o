@@ -1,4 +1,4 @@
-package org.automacao.operations;
+package org.automacao.operations.processos;
 
 import org.automacao.control.GestorWebDriver;
 import org.automacao.interfaces.Tarefa;
