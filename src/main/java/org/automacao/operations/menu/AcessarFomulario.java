@@ -10,7 +10,7 @@ public class AcessarFomulario implements Tarefa {
     @Override
     public void executar(GestorWebDriver driver) {
         try {
-            WebElement menu = driver.encontrarElementoWait("/html/body/app-root/app-admin/app-gs-viewport/app-gs-topbar/div/button",1);
+            WebElement menu = driver.encontrarElementoWait("/html/body/app-root/app-admin/app-gs-viewport/app-gs-topbar/div/button",3);
             menu.click();
         }catch(Exception e) {
             throw new NoSuchElementException("Não foi possível clicar no Menu!");

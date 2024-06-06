@@ -5,7 +5,6 @@ import org.automacao.control.GestorWebDriver;
 import org.automacao.interfaces.Tarefa;
 import org.automacao.operations.login.LoginRoute;
 import org.automacao.operations.processos.InserirChecklist;
-import org.automacao.operations.login.LoginSOS;
 
 public class Main {
     public static void main(String[] args) {

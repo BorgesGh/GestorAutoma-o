@@ -36,12 +36,12 @@ public class InserirChecklist implements Tarefa {
 
     private void inserirDados(GestorWebDriver driver){
         //Esse tipo provavelmente será retirado, mas os tipos não variam de acordo com o processo
-        String tipo = "Instalação";
+        String tipo = "Montar";
 
         for(String processo : processos) {
             for(Formulario formulario : questionario) {
 
-
+                driver.esperarEmSegundos(2);
                 WebElement botaoNovo = driver.encontrarElemento("/html/body/app-root/app-admin/app-gs-viewport/div/div/gs-usuario-table/gs-table/div/p-toolbar/div/div/div/button[1]");
                 botaoNovo.click(); //                                       /html/body/app-root/app-admin/app-gs-viewport/div/div/gs-usuario-table/gs-table/div/p-toolbar/div/div/div/button[1]
 
@@ -89,12 +89,39 @@ public class InserirChecklist implements Tarefa {
             System.out.println("O Ultimo processo feito: " + processo);
         }
     }
-    private void carregarFormularios(){
-        questionario.add(new Formulario("Foram realizadas todas as etapas da parte elétrica?",
-                "Fixação do Quadro CA; Aterramento da usina; Instalação do cabo CA/CC",
+    private void carregarFormularios() {
+        questionario.add(new Formulario("As peças estão devidamente ALINHADAS como o ORIGINAL?",
+                "Capô, faróis, para-choques, para-lamas, portas, teto, porta-malas etc",
                 true));
-    }
 
+        questionario.add(new Formulario("As peças plásticas estão firmemente instaladas e ALINHADAS como ORIGINAL?",
+                "Para-choques, grades, defletores, para-barros, pestanas, frisos, molduras, emblemas, spoilers frontal e lateral e etc",
+                true));
+
+        questionario.add(new Formulario("O PARA-CHOQUE está ALINHADO e FIXADO com os PARALAMAS?",
+                ".",
+                true));
+
+        questionario.add(new Formulario("As peças INTERNAS do porta-malas estão devidamente instaladas?",
+                "Estepe (chave de roda e triângulo), forro do porta-malas, forros laterais da cx. de rodas, bagagito, break light etc",
+                true));
+
+        questionario.add(new Formulario("As peças do INTERIOR do veículo estão devidamente instaladas?",
+                "Painel completo, forros de portas, console central, teto, colunas, bancos e etc",
+                true));
+        questionario.add(new Formulario("Alguma LUZ acesa no painel de instrumentos indicando problema?",
+                ".",
+                false));
+
+        questionario.add(new Formulario("Os componentes estão funcionando devidamente?",
+                "Faróis, faróis de neblina, esguichos, buzina, travas/alarmes (portas, capô e porta-malas), vidros elétricos, retrovisores etc",
+                true));
+
+        questionario.add(new Formulario("O AUTOGERENCIAMENTO está feito?",
+                ".",
+                true));
+
+    }
     public void inserirStringBoxList(GestorWebDriver driver, String indetificador, String string){
         driver.esperarMeioSegundo();
         WebElement boxProcesso = driver.encontrarElemento(indetificador);
